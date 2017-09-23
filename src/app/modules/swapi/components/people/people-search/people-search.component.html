@@ -1,0 +1,14 @@
+<div class="col s12 m12 l12">
+    <md-card class="grey lighten-5">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <md-form-field class="input-field col s12 m12 l4">
+                    <input mdInput placeholder="Localizar por nome" #termToSearch (keyup.enter)="doSearch(termToSearch.value)" autocomplete="off">
+                    <md-icon mdSuffix>
+                        <img src="./assets/images/ic_search.svg">
+                    </md-icon>
+                </md-form-field>
+            </div>
+        </div>
+    </md-card>
+</div>

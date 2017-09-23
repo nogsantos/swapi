@@ -1,0 +1,17 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "./styles/style";
+#nav-top {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 999;
+}
+
+#main-container {
+    margin-top: 5rem;
+}
+
+.data-end-message {
+    color:  lighten($background-color, 15%);
+    @extend .flow-text;
+}

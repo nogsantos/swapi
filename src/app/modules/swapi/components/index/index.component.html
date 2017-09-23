@@ -1,0 +1,11 @@
+<div class="row" *ngIf="router.url == '/swapi'; else rota">
+    <div class="col s12 m12 l4">
+        <app-people-headline></app-people-headline>
+    </div>
+    <div class="col s12 m12 l4">
+        <app-planets-headline></app-planets-headline>
+    </div>
+</div>
+<ng-template #rota>
+    <router-outlet></router-outlet>
+</ng-template>

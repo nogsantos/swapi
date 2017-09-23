@@ -1,0 +1,102 @@
+<div class="row">
+    <div class="col s12 m12 l12 as-title">
+        <h2 class="flow-text">{{title}}</h2>
+    </div>
+</div>
+<div class="row">
+    <app-people-search (searchValue)="search($event)"></app-people-search>
+</div>
+<div class="row">
+    <div class="col s12 m12 l12">
+        <md-accordion class="people-grid-list" *ngIf="!no_data; else noData">
+            <md-expansion-panel class="z-depth-2" *ngFor="let item of peoples; index as i; trackBy:mySave" (opened)="loadItems(item.homeworld, item.films, item.species, item.starships, item.vehicles)" hideToggle="true">
+                <md-expansion-panel-header>
+                    <md-panel-title class="flow-text">
+                        <span class="light"><span class="italic">{{i + 1}}</span> {{item.name}}</span>
+                    </md-panel-title>
+                    <md-panel-description>
+                        <md-icon>
+                            <img src="./assets/images/{{setGender(item.gender)}}">
+                        </md-icon>
+                    </md-panel-description>
+                </md-expansion-panel-header>
+                <div class="row">
+                    <div class="col s12 m12 l2">
+                        <p>Bio</p>
+                        <md-list>
+                            <md-list-item>Homeworld: <a href="javascript:void(0)" (click)="openDialog('homeworld', item.homeworld)">{{homeworld}}</a><img *ngIf="loading.homeworld" src="./assets/images/ic_loader.gif"></md-list-item>
+                            <md-list-item>Birth: {{item.birth_year}}</md-list-item>
+                            <md-list-item>Eye color: {{item.eye_color}}</md-list-item>
+                            <md-list-item>Hair color: {{item.hair_color}}</md-list-item>
+                            <md-list-item>Height: {{item.height}}cm</md-list-item>
+                            <md-list-item>Mass: {{item.mass}}kg</md-list-item>
+                            <md-list-item>Skin color: {{item.skin_color}}</md-list-item>
+                        </md-list>
+                    </div>
+                    <div class="col s12 m12 l10">
+                        <div class="col s12 m12 l3">
+                            <p>Filmes<img *ngIf="loading.films" src="./assets/images/ic_loader.gif"></p>
+                            <md-list>
+                                <md-list-item *ngFor="let film of films; index as i">
+                                    <a href="javascript:void(0)" (click)="openDialog('film', film.url)">
+                                        {{film.title}} - <i>{{dateFormat(film.release_date)}}</i>
+                                    </a>
+                                </md-list-item>
+                            </md-list>
+                        </div>
+                        <div class="col s12 m12 l3">
+                            <p>Especies<img *ngIf="loading.species" src="./assets/images/ic_loader.gif"></p>
+                            <md-list>
+                                <md-list-item *ngFor="let specie of species; index as i">
+                                    <a href="javascript:void(0)" (click)="openDialog('specie', specie.url)">
+                                        {{specie.name}}
+                                    </a>
+                                </md-list-item>
+                            </md-list>
+                        </div>
+                        <div class="col s12 m12 l3">
+                            <p>Espaçonaves<img *ngIf="loading.starships" src="./assets/images/ic_loader.gif"></p>
+                            <md-list>
+                                <md-list-item *ngFor="let starship of starships; index as i">
+                                    <a href="javascript:void(0)" (click)="openDialog('starship', starship.url)">
+                                        {{starship.name}}
+                                    </a>
+                                </md-list-item>
+                            </md-list>
+                        </div>
+                        <div class="col s12 m12 l3">
+                            <p>Veículos<img *ngIf="loading.vehicles" src="./assets/images/ic_loader.gif"></p>
+                            <md-list>
+                                <md-list-item *ngFor="let vehicle of vehicles; index as i">
+                                    <a href="javascript:void(0)" (click)="openDialog('vehicle', vehicle.url)">
+                                        {{vehicle.name}}
+                                    </a>
+                                </md-list-item>
+                            </md-list>
+                        </div>
+                    </div>
+                </div>
+            </md-expansion-panel>
+        </md-accordion>
+        <ng-template #noData>
+            <div class="row">
+                <div class="col s12 m12 l12 flow-text center">
+                    Nenhum dado localizado.
+                </div>
+            </div>
+        </ng-template>
+    </div>
+</div>
+<div class="row center" *ngIf="!pagination.next && pagination.previous && !loading.default">
+    <p class="data-end-message">Todos os personagens foram carregados</p>
+</div>
+<div class="row">
+    <div class="col s12 m12 l12" *ngIf="loading.default">
+        <md-progress-bar color="warn" mode="indeterminate"></md-progress-bar>
+    </div>
+</div>
+<div class="row center" *ngIf="pagination.next && !loading.default">
+    <button md-mini-fab class="yellow darken-3" (click)="paginate(pagination.next)" mdTooltip="Carregar mais...">
+        <md-icon><img src="./assets/images/ic_reload.svg"></md-icon>
+    </button>
+</div>
