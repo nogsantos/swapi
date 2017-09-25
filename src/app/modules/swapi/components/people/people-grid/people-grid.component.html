@@ -1,4 +1,113 @@
 <div class="row">
+    <div class="col s12 m12 l4 left-fix-col">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="col s12 m12 l12 as-title">
+                    <h2 class="flow-text">{{title}}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <app-people-search (searchValue)="search($event)"></app-people-search>
+            </div>
+        </div>
+    </div>
+    <div class="col s12 m12 l8 right-col">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <md-accordion class="people-grid-list" *ngIf="!no_data; else noData">
+                    <md-expansion-panel class="z-depth-2" *ngFor="let item of peoples; index as i; trackBy:mySave" (opened)="loadItems(item.homeworld, item.films, item.species, item.starships, item.vehicles)" hideToggle="true">
+                        <md-expansion-panel-header>
+                            <md-panel-title class="flow-text">
+                                <span class="light"><span class="italic">{{i + 1}}</span> {{item.name}}</span>
+                            </md-panel-title>
+                            <md-panel-description>
+                                <md-icon>
+                                    <img src="./assets/images/{{setGender(item.gender)}}">
+                                </md-icon>
+                            </md-panel-description>
+                        </md-expansion-panel-header>
+                        <div class="row">
+                            <div class="col s12 m12 l2">
+                                <app-attributes [attribute]="item"></app-attributes>
+                            </div>
+                            <div class="col s12 m12 l10">
+                                <div class="col s12 m12 l3">
+                                    <app-films [films]="films"></app-films>
+                                </div>
+                                <div class="col s12 m12 l3">
+                                    <p>Especies<img *ngIf="loading.species" src="./assets/images/ic_loader.gif"></p>
+                                    <md-list>
+                                        <md-list-item *ngFor="let specie of species; index as i">
+                                            <a href="javascript:void(0)" (click)="openDialog('specie', specie.url)">
+                                                        {{specie.name}}
+                                                    </a>
+                                        </md-list-item>
+                                    </md-list>
+                                </div>
+                                <div class="col s12 m12 l3">
+                                    <p>Espaçonaves<img *ngIf="loading.starships" src="./assets/images/ic_loader.gif"></p>
+                                    <md-list>
+                                        <md-list-item *ngFor="let starship of starships; index as i">
+                                            <a href="javascript:void(0)" (click)="openDialog('starship', starship.url)">
+                                                        {{starship.name}}
+                                                    </a>
+                                        </md-list-item>
+                                    </md-list>
+                                </div>
+                                <div class="col s12 m12 l3">
+                                    <p>Veículos<img *ngIf="loading.vehicles" src="./assets/images/ic_loader.gif"></p>
+                                    <md-list>
+                                        <md-list-item *ngFor="let vehicle of vehicles; index as i">
+                                            <a href="javascript:void(0)" (click)="openDialog('vehicle', vehicle.url)">
+                                                        {{vehicle.name}}
+                                                    </a>
+                                        </md-list-item>
+                                    </md-list>
+                                </div>
+                            </div>
+                        </div>
+                    </md-expansion-panel>
+                </md-accordion>
+                <div class="row center" *ngIf="!pagination.next && pagination.previous && !loading.default">
+                    <p class="data-end-message">Todos os personagens foram carregados</p>
+                </div>
+                <ng-template #noData>
+                    <div class="row">
+                        <div class="col s12 m12 l12 flow-text center">
+                            Nenhum dado localizado.
+                        </div>
+                    </div>
+                </ng-template>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="col s12 m12 l12" *ngIf="loading.default">
+                    <div class="spinner">
+                        <div class="rect1"></div>
+                        <div class="rect2"></div>
+                        <div class="rect3"></div>
+                        <div class="rect4"></div>
+                        <div class="rect5"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="row center" *ngIf="pagination.next && !loading.default">
+                    <button md-mini-fab class="yellow darken-3" (click)="paginate(pagination.next)" mdTooltip="Carregar mais...">
+                        <md-icon><img src="./assets/images/ic_reload.svg"></md-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- <div class="row">
     <div class="col s12 m12 l12 as-title">
         <h2 class="flow-text">{{title}}</h2>
     </div>
@@ -92,11 +201,17 @@
 </div>
 <div class="row">
     <div class="col s12 m12 l12" *ngIf="loading.default">
-        <md-progress-bar color="warn" mode="indeterminate"></md-progress-bar>
+        <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+        </div>
     </div>
 </div>
 <div class="row center" *ngIf="pagination.next && !loading.default">
     <button md-mini-fab class="yellow darken-3" (click)="paginate(pagination.next)" mdTooltip="Carregar mais...">
         <md-icon><img src="./assets/images/ic_reload.svg"></md-icon>
     </button>
-</div>
+</div> -->

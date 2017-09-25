@@ -1,0 +1,8 @@
+<p>Filmes<img *ngIf="loading.films" src="./assets/images/ic_loader.gif"></p>
+<md-list>
+    <md-list-item *ngFor="let film of films; index as i">
+        <a href="javascript:void(0)" (click)="openDialog('film', film.url)">
+                    {{film.title}} - <i>{{dateFormat(film.release_date)}}</i>
+                </a>
+    </md-list-item>
+</md-list>

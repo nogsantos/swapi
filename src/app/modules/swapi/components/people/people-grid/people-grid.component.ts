@@ -6,7 +6,9 @@ import * as $ from 'jquery';
 import { HttpService } from '../../../services/http/http.service';
 import { PeopleModel } from '../../people/model/people-model';
 import { PeopleFormComponent } from '../../people/people-form/people-form.component';
+import { PlanetsFormComponent } from '../../planets/planets-form/planets-form.component';
 import { EndpointApi } from '../../../services/endpoint-api';
+import { Broadcaster } from '../../../services/broadcaster/broadcaster';
 
 @Component({
     selector: 'app-people-grid',
@@ -46,7 +48,8 @@ export class PeopleGridComponent implements OnInit {
     constructor(
         private service: HttpService,
         public dialog: MdDialog,
-        private resource: EndpointApi
+        private resource: EndpointApi,
+        private broadcaster: Broadcaster,
     ) { }
     /**
      * Init
@@ -153,11 +156,14 @@ export class PeopleGridComponent implements OnInit {
      */
     loadItems(homeworld?: string, films?: Array<string>, species?: Array<string>,
         starships?: Array<string>, vehicles?: Array<string>): void {
-        this.getHomeworld(homeworld);
-        this.getFilms(films);
+        // this.getHomeworld(homeworld);
+        // this.getFilms(films);
         this.getSpecie(species);
         this.getStarShip(starships);
         this.getVehicle(vehicles);
+        // this.openedAccordion.emit(true);
+        this.broadcaster.broadcast('homeword', true);
+        this.broadcaster.broadcast('films', films);
     }
     /**
      *
@@ -165,37 +171,37 @@ export class PeopleGridComponent implements OnInit {
      * @param {string} address
      * @memberof PeopleGridComponent
      */
-    getHomeworld(address: string): void {
-        this.homeworld = '';
-        if (address.length > 0) {
-            this.loading.homeworld = true;
-            const id = address.split('/').reverse();
-            this.service.get(address).then(planet => {
-                this.homeworld = (planet) ? planet[`name`] : 'unknow';
-                this.loading.homeworld = false;
-            });
-        }
-    }
+    // getHomeworld(address: string): void {
+    //     this.homeworld = '';
+    //     if (address.length > 0) {
+    //         this.loading.homeworld = true;
+    //         const id = address.split('/').reverse();
+    //         this.service.get(address).then(planet => {
+    //             this.homeworld = (planet) ? planet[`name`] : 'unknow';
+    //             this.loading.homeworld = false;
+    //         });
+    //     }
+    // }
     /**
      *
      *
      * @param {string} address
      * @memberof PeopleGridComponent
      */
-    getFilms(address: Array<string>): void {
-        this.films = [];
-        if (address.length > 0) {
-            this.loading.films = true;
-            address.forEach(location => {
-                this.service.get(location).then(response => {
-                    if (response) {
-                        this.films.push(response);
-                    }
-                    this.loading.films = false;
-                });
-            });
-        }
-    }
+    // getFilms(address: Array<string>): void {
+    //     this.films = [];
+    //     if (address.length > 0) {
+    //         this.loading.films = true;
+    //         address.forEach(location => {
+    //             this.service.get(location).then(response => {
+    //                 if (response) {
+    //                     this.films.push(response);
+    //                 }
+    //                 this.loading.films = false;
+    //             });
+    //         });
+    //     }
+    // }
     /**
      *
      *
@@ -292,9 +298,9 @@ export class PeopleGridComponent implements OnInit {
      * @returns {string}
      * @memberof PeopleGridComponent
      */
-    dateFormat(date: string): string {
-        return `${new Date(date).getFullYear()}`;
-    }
+    // dateFormat(date: string): string {
+    //     return `${new Date(date).getFullYear()}`;
+    // }
     /**
      *
      *
@@ -364,10 +370,13 @@ export class PeopleGridComponent implements OnInit {
      * @memberof PeopleGridComponent
      */
     openDialog(resource: string, param: string): void {
-        const dialogRef = this.dialog.open(PeopleFormComponent, {
-            width: '50%',
-            height: '50%',
-            hasBackdrop: true,
+        let component: any;
+        if (resource === 'homeworld') {
+            component = PlanetsFormComponent;
+        } else {
+            component = PeopleFormComponent;
+        }
+        const dialogRef = this.dialog.open(component, {
             data: {
                 resource: resource,
                 param: param

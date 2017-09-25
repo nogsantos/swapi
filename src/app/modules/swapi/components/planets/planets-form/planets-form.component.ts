@@ -4,17 +4,33 @@ import { MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { HttpService } from '../../../services/http/http.service';
 
 @Component({
-    selector: 'app-people-form',
-    templateUrl: './people-form.component.html',
-    styleUrls: ['./people-form.component.scss']
+    selector: 'app-planets-form',
+    templateUrl: './planets-form.component.html',
+    styleUrls: ['./planets-form.component.scss']
 })
-export class PeopleFormComponent implements OnInit {
+export class PlanetsFormComponent implements OnInit {
     query_data: Array<any>;
+    loading: boolean;
+    /**
+     * Creates an instance of PlanetsFormComponent.
+     * @memberof PlanetsFormComponent
+     */
     constructor(
         private service: HttpService,
-        public dialogRef: MdDialogRef<PeopleFormComponent>,
+        public dialogRef: MdDialogRef<PlanetsFormComponent>,
         @Inject(MD_DIALOG_DATA) public data: any
     ) { }
+    /**
+     *
+     *
+     * @memberof PlanetsFormComponent
+     */
+    ngOnInit() {
+        this.query_data = [];
+        if (this.data && this.data.param) {
+            this.getResource();
+        }
+    }
     /**
      *
      *
@@ -24,25 +40,16 @@ export class PeopleFormComponent implements OnInit {
         this.dialogRef.close();
     }
     /**
-     *
-     *
-     * @memberof PeopleFormComponent
-     */
-    ngOnInit() {
-        this.query_data = [];
-        if (this.data && this.data.param) {
-            this.getResource();
-        }
-    }
-    /**
      * Get all
      *
      * @memberof PeopleFormComponent
      */
     getResource() {
+        this.loading = true;
         this.service.get(this.data.param).then(response => {
             this.query_data = response;
             console.log(this.query_data);
+            this.loading = false;
         });
     }
 

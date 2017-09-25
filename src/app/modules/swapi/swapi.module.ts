@@ -19,6 +19,11 @@ import { PlanetsGridComponent } from './components/planets/planets-grid/planets-
 import { PeopleSearchComponent } from './components/people/people-search/people-search.component';
 import { PeopleFormComponent } from './components/people/people-form/people-form.component';
 import { EndpointApi } from './services/endpoint-api';
+import { PlanetsFormComponent } from './components/planets/planets-form/planets-form.component';
+import { AttributesComponent } from './components/people/people-grid/attributes/attributes.component';
+import { FilmsComponent } from './components/people/people-grid/films/films.component';
+import { Broadcaster } from './services/broadcaster/broadcaster';
+import { MessageEventService } from './services/broadcaster/message-event.service';
 
 @NgModule({
     imports: [
@@ -37,14 +42,20 @@ import { EndpointApi } from './services/endpoint-api';
         PlanetsDetailsComponent,
         PlanetsGridComponent,
         PeopleSearchComponent,
-        PeopleFormComponent
+        PeopleFormComponent,
+        PlanetsFormComponent,
+        AttributesComponent,
+        FilmsComponent
     ],
     entryComponents: [
-        PeopleFormComponent
+        PeopleFormComponent,
+        PlanetsFormComponent
     ],
     providers: [
         HttpService,
-        EndpointApi
+        EndpointApi,
+        Broadcaster,
+        MessageEventService
     ]
 })
 export class SwapiModule { }
