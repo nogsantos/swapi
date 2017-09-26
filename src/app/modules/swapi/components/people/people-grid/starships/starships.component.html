@@ -1,0 +1,6 @@
+<p>Espaçonaves<img *ngIf="loading" src="./assets/images/ic_loader.gif"></p>
+<md-list>
+    <md-list-item *ngFor="let starship of starships; index as i">
+        <a href="javascript:void(0)" (click)="openDialog('starship', starship.url)">{{starship.name}}</a>
+    </md-list-item>
+</md-list>

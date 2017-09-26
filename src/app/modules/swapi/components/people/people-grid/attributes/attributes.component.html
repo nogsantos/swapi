@@ -1,6 +1,6 @@
 <p>Atributos</p>
 <md-list>
-    <md-list-item>Homeworld: <a href="javascript:void(0)" (click)="openDialog(attribute.homeworld)">{{homeworld}}</a><img src="./assets/images/ic_loader.gif" *ngIf="loading"></md-list-item>
+    <md-list-item>Homeworld: <a href="javascript:void(0)" (click)="openDialog('bio', attribute.homeworld)">{{homeworld}}</a><img src="./assets/images/ic_loader.gif" *ngIf="loading"></md-list-item>
     <md-list-item>Birth: {{attribute.birth_year}}</md-list-item>
     <md-list-item>Eye color: {{attribute.eye_color}}</md-list-item>
     <md-list-item>Hair color: {{attribute.hair_color}}</md-list-item>

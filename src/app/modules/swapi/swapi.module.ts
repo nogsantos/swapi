@@ -24,6 +24,9 @@ import { AttributesComponent } from './components/people/people-grid/attributes/
 import { FilmsComponent } from './components/people/people-grid/films/films.component';
 import { Broadcaster } from './services/broadcaster/broadcaster';
 import { MessageEventService } from './services/broadcaster/message-event.service';
+import { SpeciesComponent } from './components/people/people-grid/species/species.component';
+import { StarshipsComponent } from './components/people/people-grid/starships/starships.component';
+import { VehicleComponent } from './components/people/people-grid/vehicle/vehicle.component';
 
 @NgModule({
     imports: [
@@ -45,7 +48,10 @@ import { MessageEventService } from './services/broadcaster/message-event.servic
         PeopleFormComponent,
         PlanetsFormComponent,
         AttributesComponent,
-        FilmsComponent
+        FilmsComponent,
+        SpeciesComponent,
+        StarshipsComponent,
+        VehicleComponent
     ],
     entryComponents: [
         PeopleFormComponent,

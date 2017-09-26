@@ -13,10 +13,12 @@ import { PlanetsFormComponent } from '../../../planets/planets-form/planets-form
 export class AttributesComponent implements OnInit {
     @Input() attribute: any;
     homeworld: string;
-    broad: boolean;
     loading: boolean;
     /**
      * Creates an instance of AttributesComponent.
+     * @param {HttpService} service
+     * @param {Broadcaster} broadcaster
+     * @param {MdDialog} dialog
      * @memberof AttributesComponent
      */
     constructor(
@@ -31,7 +33,6 @@ export class AttributesComponent implements OnInit {
      */
     ngOnInit() {
         this.registerStringBroadcast();
-        this.broad = true;
         this.loading = false;
     }
     /**
@@ -43,12 +44,11 @@ export class AttributesComponent implements OnInit {
     getHomeworld(address: string): void {
         this.homeworld = '';
         if (address.length > 0) {
-            this.loading = !this.loading;
+            this.loading = true;
             const id = address.split('/').reverse();
             this.service.get(address).then(planet => {
                 this.homeworld = (planet) ? planet[`name`] : 'unknow';
-                this.broad = !this.broad;
-                this.loading = !this.loading;
+                this.loading = false;
             });
         }
     }
@@ -59,7 +59,7 @@ export class AttributesComponent implements OnInit {
      */
     registerStringBroadcast() {
         this.broadcaster.on<string>('homeword').subscribe(message => {
-            if (message && this.broad) {
+            if (message) {
                 this.getHomeworld(this.attribute.homeworld);
             }
         });

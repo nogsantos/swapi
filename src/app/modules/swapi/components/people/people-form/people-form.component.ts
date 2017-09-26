@@ -30,6 +30,8 @@ export class PeopleFormComponent implements OnInit {
      */
     ngOnInit() {
         this.query_data = [];
+        console.log('data', this.data);
+        console.log('param', this.data.param);
         if (this.data && this.data.param) {
             this.getResource();
         }

@@ -10,10 +10,15 @@ import { PlanetsFormComponent } from '../../planets/planets-form/planets-form.co
 import { EndpointApi } from '../../../services/endpoint-api';
 import { Broadcaster } from '../../../services/broadcaster/broadcaster';
 
+import { VehicleComponent } from './vehicle/vehicle.component';
+
 @Component({
     selector: 'app-people-grid',
     templateUrl: './people-grid.component.html',
-    styleUrls: ['./people-grid.component.scss']
+    styleUrls: ['./people-grid.component.scss'],
+    providers: [
+        VehicleComponent
+    ]
 })
 export class PeopleGridComponent implements OnInit {
     title: string;
@@ -50,6 +55,7 @@ export class PeopleGridComponent implements OnInit {
         public dialog: MdDialog,
         private resource: EndpointApi,
         private broadcaster: Broadcaster,
+        private vc: VehicleComponent
     ) { }
     /**
      * Init
@@ -57,7 +63,7 @@ export class PeopleGridComponent implements OnInit {
      * @memberof PeopleGridComponent
      */
     ngOnInit() {
-        this.title = `A People resource is an individual person or character within the Star Wars universe.`;
+        this.title = `Personagens`;
         this.peoples = [];
         this.data_end = false;
         this.getPeoples();
@@ -156,111 +162,12 @@ export class PeopleGridComponent implements OnInit {
      */
     loadItems(homeworld?: string, films?: Array<string>, species?: Array<string>,
         starships?: Array<string>, vehicles?: Array<string>): void {
-        // this.getHomeworld(homeworld);
-        // this.getFilms(films);
-        this.getSpecie(species);
-        this.getStarShip(starships);
-        this.getVehicle(vehicles);
-        // this.openedAccordion.emit(true);
         this.broadcaster.broadcast('homeword', true);
-        this.broadcaster.broadcast('films', films);
-    }
-    /**
-     *
-     *
-     * @param {string} address
-     * @memberof PeopleGridComponent
-     */
-    // getHomeworld(address: string): void {
-    //     this.homeworld = '';
-    //     if (address.length > 0) {
-    //         this.loading.homeworld = true;
-    //         const id = address.split('/').reverse();
-    //         this.service.get(address).then(planet => {
-    //             this.homeworld = (planet) ? planet[`name`] : 'unknow';
-    //             this.loading.homeworld = false;
-    //         });
-    //     }
-    // }
-    /**
-     *
-     *
-     * @param {string} address
-     * @memberof PeopleGridComponent
-     */
-    // getFilms(address: Array<string>): void {
-    //     this.films = [];
-    //     if (address.length > 0) {
-    //         this.loading.films = true;
-    //         address.forEach(location => {
-    //             this.service.get(location).then(response => {
-    //                 if (response) {
-    //                     this.films.push(response);
-    //                 }
-    //                 this.loading.films = false;
-    //             });
-    //         });
-    //     }
-    // }
-    /**
-     *
-     *
-     * @param {Array<string>} address
-     * @memberof PeopleGridComponent
-     */
-    getSpecie(address: Array<string>): void {
-        this.species = [];
-        if (address.length > 0) {
-            this.loading.species = true;
-            address.forEach(location => {
-                this.service.get(location).then(respose => {
-                    if (respose) {
-                        this.species.push(respose);
-                    }
-                    this.loading.species = false;
-                });
-            });
-        }
-    }
-    /**
-     *
-     *
-     * @param {Array<string>} address
-     * @memberof PeopleGridComponent
-     */
-    getStarShip(address: Array<string>): void {
-        this.starships = [];
-        if (address.length > 0) {
-            this.loading.starships = true;
-            address.forEach(location => {
-                this.service.get(location).then(respose => {
-                    if (respose) {
-                        this.starships.push(respose);
-                    }
-                    this.loading.starships = false;
-                });
-            });
-        }
-    }
-    /**
-     *
-     *
-     * @param {Array<string>} address
-     * @memberof PeopleGridComponent
-     */
-    getVehicle(address: Array<string>): void {
-        this.vehicles = [];
-        if (address.length > 0) {
-            this.loading.vehicles = true;
-            address.forEach(localtion => {
-                this.service.get(localtion).then(respose => {
-                    if (respose) {
-                        this.vehicles.push(respose);
-                    }
-                    this.loading.vehicles = false;
-                });
-            });
-        }
+        // this.broadcaster.broadcast('films', films);
+        // this.broadcaster.broadcast('species', species);
+        // this.broadcaster.broadcast('starships', starships);
+        // this.broadcaster.broadcast('vehicles', vehicles);
+        this.vc.getData(vehicles);
     }
     /**
      *
@@ -291,16 +198,6 @@ export class PeopleGridComponent implements OnInit {
             console.log(error);
         }
     }
-    /**
-     *
-     *
-     * @param {string} date
-     * @returns {string}
-     * @memberof PeopleGridComponent
-     */
-    // dateFormat(date: string): string {
-    //     return `${new Date(date).getFullYear()}`;
-    // }
     /**
      *
      *

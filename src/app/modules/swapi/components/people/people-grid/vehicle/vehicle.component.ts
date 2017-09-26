@@ -1,24 +1,25 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
 import { Broadcaster } from '../../../../services/broadcaster/broadcaster';
+import { ResouceFactory } from '../resouce-factory';
 
 @Component({
-    selector: 'app-films',
-    templateUrl: './films.component.html',
-    styleUrls: ['./films.component.scss']
+    selector: 'app-vehicle',
+    templateUrl: './vehicle.component.html',
+    styleUrls: ['./vehicle.component.scss']
 })
-export class FilmsComponent implements OnInit {
-    films: Array<any>;
+export class VehicleComponent implements OnInit, ResouceFactory {
+    vehicles: any;
     broad: boolean;
     loading: boolean;
     /**
-     * Creates an instance of FilmsComponent.
+     * Creates an instance of VehicleComponent.
      * @param {HttpService} service
      * @param {Broadcaster} broadcaster
      * @param {MdDialog} dialog
-     * @memberof FilmsComponent
+     * @memberof VehicleComponent
      */
     constructor(
         private service: HttpService,
@@ -28,7 +29,7 @@ export class FilmsComponent implements OnInit {
     /**
      *
      *
-     * @memberof FilmsComponent
+     * @memberof VehicleComponent
      */
     ngOnInit() {
         this.registerStringBroadcast();
@@ -37,19 +38,32 @@ export class FilmsComponent implements OnInit {
     /**
      *
      *
-     * @param {*} address
-     * @memberof FilmsComponent
+     * @memberof VehicleComponent
      */
-    getFilms(address: any): void {
-        this.films = [];
+    registerStringBroadcast = () => {
+        this.broadcaster.on<string>('vehicles').subscribe(vehicle => {
+            if (vehicle.length > 0) {
+                this.getData(vehicle);
+            }
+        });
+    }
+    /**
+     *
+     *
+     * @param {*} address
+     * @memberof VehicleComponent
+     */
+    getData = (address: any): void => {
+        console.log(address);
+        this.vehicles = [];
         if (address.length > 0) {
-            this.loading = !this.loading;
+            this.loading = true;
             address.forEach(location => {
                 this.service.get(location).then(response => {
                     if (response) {
-                        this.films.push(response);
+                        this.vehicles.push(response);
                     }
-                    this.loading = !this.loading;
+                    this.loading = false;
                 });
             });
         }
@@ -57,23 +71,11 @@ export class FilmsComponent implements OnInit {
     /**
      *
      *
-     * @memberof AttributesComponent
-     */
-    registerStringBroadcast() {
-        this.broadcaster.on<string>('films').subscribe(films => {
-            if (films.length > 0) {
-                this.getFilms(films);
-            }
-        });
-    }
-    /**
-     *
-     *
      * @param {string} resource
      * @param {string} param
-     * @memberof AttributesComponent
+     * @memberof VehicleComponent
      */
-    openDialog(resource: string, param: string): void {
+    showDialog = (resource: string, param: string): void => {
         // const dialogRef = this.dialog.open(PlanetsFormComponent, {
         //     data: {
         //         resource: '',
@@ -83,16 +85,6 @@ export class FilmsComponent implements OnInit {
         // dialogRef.afterClosed().subscribe(result => {
         //     console.log('The dialog was closed ' + result);
         // });
-    }
-    /**
-     *
-     *
-     * @param {string} date
-     * @returns {string}
-     * @memberof PeopleGridComponent
-     */
-    dateFormat(date: string): string {
-        return `${new Date(date).getFullYear()}`;
     }
 
 }
