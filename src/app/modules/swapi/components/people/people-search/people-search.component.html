@@ -2,12 +2,15 @@
     <md-card class="grey lighten-5">
         <div class="row">
             <div class="col s12 m12 l12">
-                <md-form-field class="input-field col s12 m12 l12">
-                    <input mdInput placeholder="Localizar por nome" #termToSearch (keyup.enter)="doSearch(termToSearch.value)" autocomplete="off">
-                    <md-icon mdSuffix>
+                <md-form-field class="input-field col s12 m12 l10">
+                    <input mdInput placeholder="Localizar por nome" name="termo" [(ngModel)]="termo" #termToSearch="ngModel" (keyup.enter)="doSearch()" autocomplete="off">
+                    <md-icon (click)="doSearch()" mdSuffix>
                         <img src="./assets/images/ic_search.svg">
                     </md-icon>
                 </md-form-field>
+                <div class="col s12 m12 l2 right-align" *ngIf="termo.length > 0">
+                    <a href="javascript:void(0)" (click)="doSearch(true)" md-mini-fab class="grey lighten-1 white-text" mdTooltip="Limpar filtro"><img src="./assets/images/ic_filter_remove.svg"></a>
+                </div>
             </div>
         </div>
     </md-card>

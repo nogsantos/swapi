@@ -1,6 +1,14 @@
-<p>Espaçonaves<img *ngIf="loading" src="./assets/images/ic_loader.gif"></p>
-<md-list>
-    <md-list-item *ngFor="let starship of starships; index as i">
-        <a href="javascript:void(0)" (click)="openDialog('starship', starship.url)">{{starship.name}}</a>
-    </md-list-item>
-</md-list>
+<div class="card-panel grey lighten-5">
+    <div class="items-title">
+        <img src="./assets/images/ic_airplane.svg" class="items-title-image">&nbsp;<span>Espaçonaves</span>&nbsp;<img *ngIf="loading" src="./assets/images/ic_loader.gif">
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <md-list>
+                <md-list-item *ngFor="let starship of starships_data; index as i">
+                    <a href="javascript:void(0)" (click)="openDialog('starship', starship.url)">{{starship.name}}</a>
+                </md-list-item>
+            </md-list>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MdDialog } from '@angular/material';
+import { trigger, style, transition, animate, group } from '@angular/animations';
 
 import * as $ from 'jquery';
 
@@ -9,19 +10,27 @@ import { PeopleFormComponent } from '../../people/people-form/people-form.compon
 import { PlanetsFormComponent } from '../../planets/planets-form/planets-form.component';
 import { EndpointApi } from '../../../services/endpoint-api';
 import { Broadcaster } from '../../../services/broadcaster/broadcaster';
-
-import { VehicleComponent } from './vehicle/vehicle.component';
+import { ColorService } from '../../../../../services/color.service';
 
 @Component({
     selector: 'app-people-grid',
     templateUrl: './people-grid.component.html',
     styleUrls: ['./people-grid.component.scss'],
-    providers: [
-        VehicleComponent
+    animations: [
+        trigger('itemAnim', [
+            transition(':enter', [
+                style({ opacity: 0 }),
+                animate(100, style({ opacity: 1 }))
+            ]),
+            transition(':leave', [
+                animate(1000, style({ opacity: 0 }))
+            ])
+        ])
     ]
 })
 export class PeopleGridComponent implements OnInit {
     title: string;
+    step: number;
     homeworld: string;
     peoples: Array<any>;
     films: Array<any>;
@@ -55,7 +64,7 @@ export class PeopleGridComponent implements OnInit {
         public dialog: MdDialog,
         private resource: EndpointApi,
         private broadcaster: Broadcaster,
-        private vc: VehicleComponent
+        public colors: ColorService
     ) { }
     /**
      * Init
@@ -66,6 +75,7 @@ export class PeopleGridComponent implements OnInit {
         this.title = `Personagens`;
         this.peoples = [];
         this.data_end = false;
+        this.step = 0;
         this.getPeoples();
         this.pageScroll();
     }
@@ -149,25 +159,6 @@ export class PeopleGridComponent implements OnInit {
             this.data_end = true;
             this.loading.default = false;
         }
-    }
-    /**
-     *
-     *
-     * @param {string} [homeworld]
-     * @param {Array<string>} [films]
-     * @param {Array<string>} [species]
-     * @param {Array<string>} [starships]
-     * @param {Array<string>} [vehicles]
-     * @memberof PeopleGridComponent
-     */
-    loadItems(homeworld?: string, films?: Array<string>, species?: Array<string>,
-        starships?: Array<string>, vehicles?: Array<string>): void {
-        this.broadcaster.broadcast('homeword', true);
-        // this.broadcaster.broadcast('films', films);
-        // this.broadcaster.broadcast('species', species);
-        // this.broadcaster.broadcast('starships', starships);
-        // this.broadcaster.broadcast('vehicles', vehicles);
-        this.vc.getData(vehicles);
     }
     /**
      *
@@ -283,4 +274,15 @@ export class PeopleGridComponent implements OnInit {
             console.log('The dialog was closed ' + result);
         });
     }
+    /**
+     *
+     *
+     * @param {string} value
+     * @returns {string}
+     * @memberof PeopleGridComponent
+     */
+    getFirstLetter(value: string): string {
+        return `${value.substr(0, 1).toUpperCase()}`;
+    }
+
 }

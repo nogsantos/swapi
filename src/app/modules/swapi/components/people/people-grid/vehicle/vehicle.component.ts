@@ -1,29 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
-import { Broadcaster } from '../../../../services/broadcaster/broadcaster';
-import { ResouceFactory } from '../resouce-factory';
 
 @Component({
     selector: 'app-vehicle',
     templateUrl: './vehicle.component.html',
     styleUrls: ['./vehicle.component.scss']
 })
-export class VehicleComponent implements OnInit, ResouceFactory {
-    vehicles: any;
+export class VehicleComponent implements OnInit {
+    @Input() vehicles: any;
+    vehicles_data: any;
     broad: boolean;
     loading: boolean;
     /**
      * Creates an instance of VehicleComponent.
      * @param {HttpService} service
-     * @param {Broadcaster} broadcaster
      * @param {MdDialog} dialog
      * @memberof VehicleComponent
      */
     constructor(
         private service: HttpService,
-        private broadcaster: Broadcaster,
         private dialog: MdDialog,
     ) { }
     /**
@@ -32,20 +29,8 @@ export class VehicleComponent implements OnInit, ResouceFactory {
      * @memberof VehicleComponent
      */
     ngOnInit() {
-        this.registerStringBroadcast();
         this.loading = false;
-    }
-    /**
-     *
-     *
-     * @memberof VehicleComponent
-     */
-    registerStringBroadcast = () => {
-        this.broadcaster.on<string>('vehicles').subscribe(vehicle => {
-            if (vehicle.length > 0) {
-                this.getData(vehicle);
-            }
-        });
+        this.getData();
     }
     /**
      *
@@ -53,15 +38,14 @@ export class VehicleComponent implements OnInit, ResouceFactory {
      * @param {*} address
      * @memberof VehicleComponent
      */
-    getData = (address: any): void => {
-        console.log(address);
-        this.vehicles = [];
-        if (address.length > 0) {
+    getData = (): void => {
+        this.vehicles_data = [];
+        if (this.vehicles.length > 0) {
             this.loading = true;
-            address.forEach(location => {
+            this.vehicles.forEach(location => {
                 this.service.get(location).then(response => {
                     if (response) {
-                        this.vehicles.push(response);
+                        this.vehicles_data.push(response);
                     }
                     this.loading = false;
                 });

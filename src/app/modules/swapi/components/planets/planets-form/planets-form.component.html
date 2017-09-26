@@ -1,33 +1,35 @@
 <h2 md-dialog-title *ngIf="query_data.name">
     {{query_data.name}}
-    <div class="spiner-container" *ngIf="!loading">
+</h2>
+<md-dialog-content>
+    <div class="spiner-container" *ngIf="loading; else formData">
         <div class="spinner">
             <div class="double-bounce1"></div>
             <div class="double-bounce2"></div>
         </div>
     </div>
-</h2>
-<md-dialog-content>
-    <div class="row">
-        <div class="col s12 m12 l12">Diâmetro: {{query_data.diameter}}</div>
-        <div class="col s12 m12 l12">Período de rotação: {{query_data.rotation_period}}</div>
-        <div class="col s12 m12 l12">Período orbital: {{query_data.orbital_period}}</div>
-        <div class="col s12 m12 l12">Gravidade: {{query_data.gravity}}</div>
-        <div class="col s12 m12 l12">População: {{query_data.population}}</div>
-        <div class="col s12 m12 l12">Clima: {{query_data.climate}}</div>
-        <div class="col s12 m12 l12">Terreno: {{query_data.terrain}}</div>
-        <div class="col s12 m12 l12">Superfície da água: {{query_data.surface_water}}%</div>
-    </div>
-    <ul>
-        <li *ngFor="let resident of query_data.residents">
-            {{resident}}
-        </li>
-    </ul>
-    <ul>
-        <li *ngFor="let film of query_data.films">
-            {{film}}
-        </li>
-    </ul>
+    <ng-template #formData>
+        <div class="row">
+            <div class="col s12 m12 l12">Diâmetro: {{query_data.diameter}}</div>
+            <div class="col s12 m12 l12">Período de rotação: {{query_data.rotation_period}}</div>
+            <div class="col s12 m12 l12">Período orbital: {{query_data.orbital_period}}</div>
+            <div class="col s12 m12 l12">Gravidade: {{query_data.gravity}}</div>
+            <div class="col s12 m12 l12">População: {{query_data.population}}</div>
+            <div class="col s12 m12 l12">Clima: {{query_data.climate}}</div>
+            <div class="col s12 m12 l12">Terreno: {{query_data.terrain}}</div>
+            <div class="col s12 m12 l12">Superfície da água: {{query_data.surface_water}}%</div>
+        </div>
+        <ul>
+            <li *ngFor="let resident of query_data.residents">
+                {{resident}}
+            </li>
+        </ul>
+        <ul>
+            <li *ngFor="let film of query_data.films">
+                {{film}}
+            </li>
+        </ul>
+    </ng-template>
 </md-dialog-content>
 <md-dialog-actions>
     <button md-button [md-dialog-close]="true">Sair</button>

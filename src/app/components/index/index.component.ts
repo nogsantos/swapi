@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { AlertaService } from '../../services/alerta/alerta.service';
-
 @Component({
     selector: 'app-index',
     templateUrl: './index.component.html',
@@ -13,9 +11,7 @@ export class IndexComponent implements OnInit {
      * Creates an instance of IndexComponent.
      * @memberof IndexComponent
      */
-    constructor(
-        private service: AlertaService
-    ) {
+    constructor() {
         this.title = `Star Wars Api`;
     }
     /**
@@ -25,8 +21,4 @@ export class IndexComponent implements OnInit {
      */
     ngOnInit() {
     }
-    hello(): void {
-        this.service.msgAlerta('Star Wars Api!');
-    }
-
 }

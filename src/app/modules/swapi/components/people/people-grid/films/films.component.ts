@@ -1,8 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
-import { Broadcaster } from '../../../../services/broadcaster/broadcaster';
 
 @Component({
     selector: 'app-films',
@@ -10,19 +9,17 @@ import { Broadcaster } from '../../../../services/broadcaster/broadcaster';
     styleUrls: ['./films.component.scss']
 })
 export class FilmsComponent implements OnInit {
-    films: Array<any>;
-    broad: boolean;
+    @Input() films: Array<any>;
+    films_data: Array<any>;
     loading: boolean;
     /**
      * Creates an instance of FilmsComponent.
      * @param {HttpService} service
-     * @param {Broadcaster} broadcaster
      * @param {MdDialog} dialog
      * @memberof FilmsComponent
      */
     constructor(
         private service: HttpService,
-        private broadcaster: Broadcaster,
         private dialog: MdDialog,
     ) { }
     /**
@@ -31,40 +28,27 @@ export class FilmsComponent implements OnInit {
      * @memberof FilmsComponent
      */
     ngOnInit() {
-        this.registerStringBroadcast();
+        this.getData();
         this.loading = false;
     }
     /**
      *
      *
-     * @param {*} address
      * @memberof FilmsComponent
      */
-    getFilms(address: any): void {
-        this.films = [];
-        if (address.length > 0) {
-            this.loading = !this.loading;
-            address.forEach(location => {
+    getData = (): void => {
+        this.films_data = [];
+        if (this.films.length > 0) {
+            this.loading = true;
+            this.films.forEach(location => {
                 this.service.get(location).then(response => {
                     if (response) {
-                        this.films.push(response);
+                        this.films_data.push(response);
                     }
-                    this.loading = !this.loading;
+                    this.loading = false;
                 });
             });
         }
-    }
-    /**
-     *
-     *
-     * @memberof AttributesComponent
-     */
-    registerStringBroadcast() {
-        this.broadcaster.on<string>('films').subscribe(films => {
-            if (films.length > 0) {
-                this.getFilms(films);
-            }
-        });
     }
     /**
      *

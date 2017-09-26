@@ -17,12 +17,15 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <md-accordion class="people-grid-list" *ngIf="!no_data; else noData">
-                    <md-expansion-panel class="z-depth-2" *ngFor="let item of peoples; index as i; trackBy:mySave" (opened)="loadItems(item.homeworld, item.films, item.species, item.starships, item.vehicles)" hideToggle="true">
+                    <md-expansion-panel class="z-depth-2" *ngFor="let item of peoples; index as i; trackBy:mySave" hideToggle="true" [@itemAnim]>
                         <md-expansion-panel-header>
-                            <md-panel-title class="flow-text">
-                                <span class="light"><span class="italic">{{i + 1}}</span> {{item.name}}</span>
+                            <md-panel-title>
+                                <span class="list-circle-base list-circle grey lighten-1 z-depth-1 left">{{getFirstLetter(item.name)}}</span>
                             </md-panel-title>
                             <md-panel-description>
+                                <span class="flow-text">
+                                    {{item.name}}
+                                </span>
                                 <md-icon>
                                     <img src="./assets/images/{{setGender(item.gender)}}">
                                 </md-icon>
@@ -35,18 +38,38 @@
                         </div>
                         <div class="row">
                             <div class="col s12 m12 l6">
-                                <app-films></app-films>
+                                <app-films [films]="item.films" *ngIf="item.films.length > 0; else noFilms"></app-films>
+                                <ng-template #noFilms>
+                                    <div class="center">
+                                        Não participou de nenhum filme
+                                    </div>
+                                </ng-template>
                             </div>
                             <div class="col s12 m12 l6">
-                                <app-species></app-species>
+                                <app-species [species]="item.species" *ngIf="item.species.length > 0; else noSpecies"></app-species>
+                                <ng-template #noSpecies>
+                                    <div class="center">
+                                        Não faz parte de nenhuma espécie
+                                    </div>
+                                </ng-template>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col s12 m12 l6">
-                                <app-starships></app-starships>
+                                <app-starships [starships]="item.starships" *ngIf="item.starships.length > 0; else noStarships"></app-starships>
+                                <ng-template #noStarships>
+                                    <div class="center">
+                                        Não possui espaçonave
+                                    </div>
+                                </ng-template>
                             </div>
                             <div class="col s12 m12 l6">
-                                <app-vehicle></app-vehicle>
+                                <app-vehicle [vehicles]="item.vehicles" *ngIf="item.vehicles.length > 0; else noVehicles"></app-vehicle>
+                                <ng-template #noVehicles>
+                                    <div class="center">
+                                        Não possui veículos
+                                    </div>
+                                </ng-template>
                             </div>
                         </div>
                     </md-expansion-panel>

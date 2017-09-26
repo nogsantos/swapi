@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
-import { Broadcaster } from '../../../../services/broadcaster/broadcaster';
 import { PlanetsFormComponent } from '../../../planets/planets-form/planets-form.component';
 
 @Component({
@@ -17,13 +16,11 @@ export class AttributesComponent implements OnInit {
     /**
      * Creates an instance of AttributesComponent.
      * @param {HttpService} service
-     * @param {Broadcaster} broadcaster
      * @param {MdDialog} dialog
      * @memberof AttributesComponent
      */
     constructor(
         private service: HttpService,
-        private broadcaster: Broadcaster,
         private dialog: MdDialog,
     ) { }
     /**
@@ -32,37 +29,23 @@ export class AttributesComponent implements OnInit {
      * @memberof AttributesComponent
      */
     ngOnInit() {
-        this.registerStringBroadcast();
         this.loading = false;
+        this.getData();
     }
     /**
      *
      *
-     * @param {string} address
      * @memberof AttributesComponent
      */
-    getHomeworld(address: string): void {
+    getData = (): void => {
         this.homeworld = '';
-        if (address.length > 0) {
+        if (this.attribute.homeworld.length > 0) {
             this.loading = true;
-            const id = address.split('/').reverse();
-            this.service.get(address).then(planet => {
+            this.service.get(this.attribute.homeworld).then(planet => {
                 this.homeworld = (planet) ? planet[`name`] : 'unknow';
                 this.loading = false;
             });
         }
-    }
-    /**
-     *
-     *
-     * @memberof AttributesComponent
-     */
-    registerStringBroadcast() {
-        this.broadcaster.on<string>('homeword').subscribe(message => {
-            if (message) {
-                this.getHomeworld(this.attribute.homeworld);
-            }
-        });
     }
     /**
      *
@@ -81,5 +64,29 @@ export class AttributesComponent implements OnInit {
         dialogRef.afterClosed().subscribe(result => {
             console.log('The dialog was closed ' + result);
         });
+    }
+    /**
+     *
+     *
+     * @param {string} valor
+     * @returns {string}
+     * @memberof AttributesComponent
+     */
+    resolveAcronym(valor: string): string {
+        let acronym: string;
+        switch (valor.replace(/[0-9]/g, '')) {
+            case 'BBY':
+            case '.BBY':
+                acronym = 'Before';
+                break;
+            case 'ABY':
+            case '.ABY':
+                acronym = 'After';
+                break;
+            default:
+                acronym = 'unknown of';
+                break;
+        }
+        return `${acronym} the Battle of Yavin.`;
     }
 }

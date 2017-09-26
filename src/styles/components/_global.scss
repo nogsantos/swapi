@@ -680,7 +680,7 @@ th {
 }
 
 .as-title {
-    border-bottom: 1.1px solid  lighten($background-color, 25%);
+    border-bottom: 1.1px solid lighten($background-color, 25%);
 }
 
 @media #{$medium-and-up} {
@@ -693,4 +693,104 @@ th {
         float: right !important;
         right: 0 !important;
     }
+    .cdk-global-scrollblock {
+        position: unset !important;
+    }
+}
+
+
+/**
+ * Spinner
+ */
+
+.spinner {
+    margin: 50px auto;
+    width: 50px;
+    height: 40px;
+    text-align: center;
+    font-size: 10px;
+    &>div {
+        height: 100%;
+        width: 6px;
+        display: inline-block;
+        -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+        animation: sk-stretchdelay 1.2s infinite ease-in-out;
+    }
+    .rect2 {
+        background-color: color("amber", "lighten-3");
+        -webkit-animation-delay: -1.1s;
+        animation-delay: -1.1s;
+    }
+    .rect3 {
+        background-color: darken(color("amber", "lighten-3"), 10%);
+        -webkit-animation-delay: -1.0s;
+        animation-delay: -1.0s;
+    }
+    .rect4 {
+        background-color: darken(color("amber", "lighten-3"), 15%);
+        -webkit-animation-delay: -0.9s;
+        animation-delay: -0.9s;
+    }
+    .rect5 {
+        background-color: darken(color("amber", "lighten-3"), 20%);
+        -webkit-animation-delay: -0.8s;
+        animation-delay: -0.8s;
+    }
+}
+
+@-webkit-keyframes sk-stretchdelay {
+    0%,
+    40%,
+    100% {
+        -webkit-transform: scaleY(0.4)
+    }
+    20% {
+        -webkit-transform: scaleY(1.0)
+    }
+}
+
+@keyframes sk-stretchdelay {
+    0%,
+    40%,
+    100% {
+        transform: scaleY(0.4);
+        -webkit-transform: scaleY(0.4);
+    }
+    20% {
+        transform: scaleY(1.0);
+        -webkit-transform: scaleY(1.0);
+    }
+}
+
+.items-title {
+    background-color: #546e7a;
+    padding: 0.5rem;
+    font-weight: bold;
+    color: #eceff1;
+    &>span {
+        float: right;
+        padding: 0.4rem;
+        font-size: 1.5rem;
+    }
+}
+
+.list-circle-base {
+    border-radius: 50%;
+}
+
+.list-circle {
+    $default-px: 40px;
+    width: $default-px;
+    height: $default-px;
+    line-height: $default-px;
+    position: relative;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    vertical-align: middle;
+    margin: 1rem;
+}
+
+.list-title {
+    position: relative;
 }

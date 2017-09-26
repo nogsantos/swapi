@@ -7,6 +7,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class PeopleSearchComponent implements OnInit {
     @Output() searchValue = new EventEmitter();
+    termo: string;
     /**
      * Creates an instance of PeopleSearchComponent.
      * @memberof PeopleSearchComponent
@@ -18,13 +19,17 @@ export class PeopleSearchComponent implements OnInit {
      * @memberof PeopleSearchComponent
      */
     ngOnInit() {
+        this.termo = '';
     }
     /**
      * Serch by name
      *
      * @memberof PeopleGridComponent
      */
-    doSearch(value: string): void {
-        this.searchValue.emit(value);
+    doSearch(empty?: boolean): void {
+        if (empty) {
+            this.termo = '';
+        }
+        this.searchValue.emit(this.termo);
     }
 }

@@ -1,6 +1,14 @@
-<p>Veículos<img *ngIf="loading" src="./assets/images/ic_loader.gif"></p>
-<md-list>
-    <md-list-item *ngFor="let vehicle of vehicles; index as i">
-        <a href="javascript:void(0)" (click)="showDialog('vehicle', vehicle.url)">{{vehicle.name}}</a>
-    </md-list-item>
-</md-list>
+<div class="card-panel">
+    <div class="items-title">
+        <img src="./assets/images/ic_motorbike.svg" class="items-title-image">&nbsp;<span>Veículos</span>&nbsp;<img *ngIf="loading" src="./assets/images/ic_loader.gif">
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <md-list>
+                <md-list-item *ngFor="let vehicle of vehicles_data; index as i">
+                    <a href="javascript:void(0)" (click)="showDialog('vehicle', vehicle.url)">{{vehicle.name}}</a>
+                </md-list-item>
+            </md-list>
+        </div>
+    </div>
+</div>

@@ -27,6 +27,7 @@ import { MessageEventService } from './services/broadcaster/message-event.servic
 import { SpeciesComponent } from './components/people/people-grid/species/species.component';
 import { StarshipsComponent } from './components/people/people-grid/starships/starships.component';
 import { VehicleComponent } from './components/people/people-grid/vehicle/vehicle.component';
+import { ColorService } from '../../services/color.service';
 
 @NgModule({
     imports: [
@@ -34,7 +35,7 @@ import { VehicleComponent } from './components/people/people-grid/vehicle/vehicl
         FormsModule,
         HttpModule,
         MaterialModule,
-        SwapingRoutingModule,
+        SwapingRoutingModule
     ],
     declarations: [
         IndexComponent,
@@ -61,7 +62,8 @@ import { VehicleComponent } from './components/people/people-grid/vehicle/vehicl
         HttpService,
         EndpointApi,
         Broadcaster,
-        MessageEventService
+        MessageEventService,
+        ColorService
     ]
 })
 export class SwapiModule { }

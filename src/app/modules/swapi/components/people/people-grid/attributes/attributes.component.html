@@ -1,10 +1,22 @@
-<p>Atributos</p>
-<md-list>
-    <md-list-item>Homeworld: <a href="javascript:void(0)" (click)="openDialog('bio', attribute.homeworld)">{{homeworld}}</a><img src="./assets/images/ic_loader.gif" *ngIf="loading"></md-list-item>
-    <md-list-item>Birth: {{attribute.birth_year}}</md-list-item>
-    <md-list-item>Eye color: {{attribute.eye_color}}</md-list-item>
-    <md-list-item>Hair color: {{attribute.hair_color}}</md-list-item>
-    <md-list-item>Height: {{attribute.height}}cm</md-list-item>
-    <md-list-item>Mass: {{attribute.mass}}kg</md-list-item>
-    <md-list-item>Skin color: {{attribute.skin_color}}</md-list-item>
-</md-list>
+<div class="card-panel grey lighten-5">
+    <div class="items-title">
+        <img src="./assets/images/ic_fingerprint.svg" class="items-title-image">&nbsp;<span>Características</span>
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l6">
+            <md-list>
+                <md-list-item class="grey-text darken-1"><strong>Terra natal:</strong>&nbsp;<a href="javascript:void(0)" (click)="openDialog('bio', attribute.homeworld)">{{homeworld}}</a><img src="./assets/images/ic_loader.gif" *ngIf="loading"></md-list-item>
+                <md-list-item class="grey-text darken-1"><strong>Ano de nascimento:</strong>&nbsp;<abbr [title]="resolveAcronym(attribute.birth_year)">{{attribute.birth_year}}</abbr></md-list-item>
+                <md-list-item class="grey-text darken-1"><strong>Cor dos olhos:</strong>&nbsp;<span class="{{attribute.eye_color}}-text">{{attribute.eye_color}}</span></md-list-item>
+                <md-list-item class="grey-text darken-1"><strong>Cor dos cabelos:</strong>&nbsp;{{attribute.hair_color}}</md-list-item>
+            </md-list>
+        </div>
+        <div class="col s12 m12 l6">
+            <md-list>
+                <md-list-item class="grey-text darken-1"><strong>Altura:</strong>&nbsp;{{attribute.height}}cm</md-list-item>
+                <md-list-item class="grey-text darken-1"><strong>Peso:</strong>&nbsp;{{attribute.mass}}kg</md-list-item>
+                <md-list-item class="grey-text darken-1"><strong>Cor da pele:</strong>&nbsp;{{attribute.skin_color}}</md-list-item>
+            </md-list>
+        </div>
+    </div>
+</div>

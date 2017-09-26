@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
-import { Broadcaster } from '../../../../services/broadcaster/broadcaster';
 
 @Component({
     selector: 'app-starships',
@@ -10,19 +9,17 @@ import { Broadcaster } from '../../../../services/broadcaster/broadcaster';
     styleUrls: ['./starships.component.scss']
 })
 export class StarshipsComponent implements OnInit {
-    starships: any;
-    broad: boolean;
+    @Input() starships: any;
+    starships_data: any;
     loading: boolean;
     /**
      * Creates an instance of StarshipsComponent.
      * @param {HttpService} service
-     * @param {Broadcaster} broadcaster
      * @param {MdDialog} dialog
      * @memberof StarshipsComponent
      */
     constructor(
         private service: HttpService,
-        private broadcaster: Broadcaster,
         private dialog: MdDialog,
     ) { }
     /**
@@ -31,7 +28,7 @@ export class StarshipsComponent implements OnInit {
      * @memberof StarshipsComponent
      */
     ngOnInit() {
-        this.registerStringBroadcast();
+        this.getData();
         this.loading = false;
     }
     /**
@@ -39,27 +36,14 @@ export class StarshipsComponent implements OnInit {
      *
      * @memberof StarshipsComponent
      */
-    registerStringBroadcast() {
-        this.broadcaster.on<string>('starships').subscribe(starships => {
-            if (starships.length > 0) {
-                this.getStarships(starships);
-            }
-        });
-    }
-    /**
-     *
-     *
-     * @param {*} address
-     * @memberof StarshipsComponent
-     */
-    getStarships(address: any): void {
-        this.starships = [];
-        if (address.length > 0) {
+    getData = (): void => {
+        this.starships_data = [];
+        if (this.starships.length > 0) {
             this.loading = true;
-            address.forEach(location => {
+            this.starships.forEach(location => {
                 this.service.get(location).then(response => {
                     if (response) {
-                        this.starships.push(response);
+                        this.starships_data.push(response);
                     }
                     this.loading = false;
                 });

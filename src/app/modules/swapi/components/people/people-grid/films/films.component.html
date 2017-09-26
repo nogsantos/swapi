@@ -1,6 +1,14 @@
-<p>Filmes<img *ngIf="loading" src="./assets/images/ic_loader.gif"></p>
-<md-list>
-    <md-list-item *ngFor="let film of films; index as i">
-        <a href="javascript:void(0)" (click)="openDialog('film', film.url)">{{film.title}} - <i>{{dateFormat(film.release_date)}}</i></a>
-    </md-list-item>
-</md-list>
+<div class="card-panel grey lighten-5">
+    <div class=" items-title">
+        <img src="./assets/images/ic_filmstrip.svg" class="items-title-image">&nbsp;<span>Filmes</span>&nbsp;<img *ngIf="loading" src="./assets/images/ic_loader.gif">
+    </div>
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <md-list>
+                <md-list-item *ngFor="let film of films_data; index as i">
+                    <a href="javascript:void(0)" (click)="openDialog('film', film.url)"><em>{{dateFormat(film.release_date)}}</em>&nbsp;{{film.title}}</a>
+                </md-list-item>
+            </md-list>
+        </div>
+    </div>
+</div>

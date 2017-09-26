@@ -8,7 +8,6 @@ import { AppRoutingModule } from './modules/app-routing/app-routing.module';
 import { MaterialModule } from './modules/material/material.module';
 import 'hammerjs';
 
-import { AlertaService } from './services/alerta/alerta.service';
 import { IndexComponent } from './components/index/index.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -27,9 +26,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
         FormsModule,
         MaterialModule,
     ],
-    providers: [
-        AlertaService
-    ],
+    providers: [],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

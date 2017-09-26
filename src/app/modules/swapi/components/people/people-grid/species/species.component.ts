@@ -1,8 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
-import { Broadcaster } from '../../../../services/broadcaster/broadcaster';
 
 @Component({
     selector: 'app-species',
@@ -10,19 +9,17 @@ import { Broadcaster } from '../../../../services/broadcaster/broadcaster';
     styleUrls: ['./species.component.scss']
 })
 export class SpeciesComponent implements OnInit {
-    species: any;
-    broad: boolean;
+    @Input() species: any;
+    species_data: any;
     loading: boolean;
     /**
      * Creates an instance of SpeciesComponent.
      * @param {HttpService} service
-     * @param {Broadcaster} broadcaster
      * @param {MdDialog} dialog
      * @memberof SpeciesComponent
      */
     constructor(
         private service: HttpService,
-        private broadcaster: Broadcaster,
         private dialog: MdDialog,
     ) { }
     /**
@@ -31,7 +28,7 @@ export class SpeciesComponent implements OnInit {
      * @memberof SpeciesComponent
      */
     ngOnInit() {
-        this.registerStringBroadcast();
+        this.getData();
         this.loading = false;
     }
     /**
@@ -39,27 +36,14 @@ export class SpeciesComponent implements OnInit {
      *
      * @memberof SpeciesComponent
      */
-    registerStringBroadcast() {
-        this.broadcaster.on<string>('species').subscribe(species => {
-            if (species.length > 0) {
-                this.getSpecie(species);
-            }
-        });
-    }
-    /**
-     *
-     *
-     * @param {*} address
-     * @memberof SpeciesComponent
-     */
-    getSpecie(address: any): void {
-        this.species = [];
-        if (address.length > 0) {
+    getData = (): void => {
+        this.species_data = [];
+        if (this.species.length > 0) {
             this.loading = true;
-            address.forEach(location => {
+            this.species.forEach(location => {
                 this.service.get(location).then(respose => {
                     if (respose) {
-                        this.species.push(respose);
+                        this.species_data.push(respose);
                     }
                     this.loading = false;
                 });
