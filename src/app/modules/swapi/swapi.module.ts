@@ -28,6 +28,10 @@ import { SpeciesComponent } from './components/people/people-grid/species/specie
 import { StarshipsComponent } from './components/people/people-grid/starships/starships.component';
 import { VehicleComponent } from './components/people/people-grid/vehicle/vehicle.component';
 import { ColorService } from '../../services/color.service';
+import { SpeciesFormComponent } from './components/species/species-form/species-form.component';
+import { StarshipsFormComponent } from './components/starships/starships-form/starships-form.component';
+import { VehiclesFormComponent } from './components/vehicles/vehicles-form/vehicles-form.component';
+import { FilmsFormComponent } from './components/films/films-form/films-form.component';
 
 @NgModule({
     imports: [
@@ -52,11 +56,19 @@ import { ColorService } from '../../services/color.service';
         FilmsComponent,
         SpeciesComponent,
         StarshipsComponent,
-        VehicleComponent
+        VehicleComponent,
+        SpeciesFormComponent,
+        StarshipsFormComponent,
+        VehiclesFormComponent,
+        FilmsFormComponent
     ],
     entryComponents: [
         PeopleFormComponent,
-        PlanetsFormComponent
+        PlanetsFormComponent,
+        SpeciesFormComponent,
+        StarshipsFormComponent,
+        VehiclesFormComponent,
+        FilmsFormComponent
     ],
     providers: [
         HttpService,

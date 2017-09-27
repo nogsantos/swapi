@@ -1,10 +1,21 @@
 .card-panel {
     transition: box-shadow .25s;
-    padding: $card-padding;
     margin: $element-top-margin 0 $element-bottom-margin 0;
     border-radius: 2px;
     @extend .z-depth-1;
     background-color: $card-bg-color;
+}
+
+@media #{$medium-and-down} {
+    .card-panel {
+        padding: $card-padding !important;
+    }
+}
+
+@media #{$large-and-up} {
+    .card-panel {
+        padding: unset !important;
+    }
 }
 
 .card {

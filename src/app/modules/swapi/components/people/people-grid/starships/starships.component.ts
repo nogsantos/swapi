@@ -1,26 +1,30 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
+import { ComponentResoucesService } from '../../../../../../services/component-resouces.service';
+import { StarshipsFormComponent } from '../../../starships/starships-form/starships-form.component';
 
 @Component({
     selector: 'app-starships',
     templateUrl: './starships.component.html',
-    styleUrls: ['./starships.component.scss']
+    styleUrls: ['./starships.component.scss'],
+    providers: [
+        ComponentResoucesService
+    ]
 })
 export class StarshipsComponent implements OnInit {
     @Input() starships: any;
     starships_data: any;
-    loading: boolean;
+    sortedData: any;
     /**
      * Creates an instance of StarshipsComponent.
      * @param {HttpService} service
-     * @param {MdDialog} dialog
+     * @param {ComponentResoucesService} factory
      * @memberof StarshipsComponent
      */
     constructor(
         private service: HttpService,
-        private dialog: MdDialog,
+        private factory: ComponentResoucesService,
     ) { }
     /**
      *
@@ -28,24 +32,22 @@ export class StarshipsComponent implements OnInit {
      * @memberof StarshipsComponent
      */
     ngOnInit() {
-        this.getData();
-        this.loading = false;
+        this.get();
     }
     /**
      *
      *
      * @memberof StarshipsComponent
      */
-    getData = (): void => {
+    get(): void {
         this.starships_data = [];
         if (this.starships.length > 0) {
-            this.loading = true;
             this.starships.forEach(location => {
                 this.service.get(location).then(response => {
                     if (response) {
                         this.starships_data.push(response);
+                        this.sortedData = this.starships_data.slice();
                     }
-                    this.loading = false;
                 });
             });
         }
@@ -53,20 +55,26 @@ export class StarshipsComponent implements OnInit {
     /**
      *
      *
-     * @param {string} resource
      * @param {string} param
-     * @memberof AttributesComponent
+     * @memberof StarshipsComponent
      */
-    openDialog(resource: string, param: string): void {
-        // const dialogRef = this.dialog.open(PlanetsFormComponent, {
-        //     data: {
-        //         resource: '',
-        //         param: param
-        //     }
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     console.log('The dialog was closed ' + result);
-        // });
+    dialog(param: string): void {
+        this.factory.showDialog(param, StarshipsFormComponent);
     }
-
+    /**
+     *
+     *
+     * @param {*} sort
+     * @memberof StarshipsComponent
+     */
+    sort(sort: any) {
+        this.sortedData = this.factory.sortData(
+            sort,
+            this.starships_data.slice(),
+            [
+                'name',
+                'starship_class'
+            ]
+        );
+    }
 }

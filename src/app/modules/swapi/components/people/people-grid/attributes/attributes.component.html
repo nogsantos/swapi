@@ -5,18 +5,26 @@
     <div class="row">
         <div class="col s12 m12 l6">
             <md-list>
-                <md-list-item class="grey-text darken-1"><strong>Terra natal:</strong>&nbsp;<a href="javascript:void(0)" (click)="openDialog('bio', attribute.homeworld)">{{homeworld}}</a><img src="./assets/images/ic_loader.gif" *ngIf="loading"></md-list-item>
-                <md-list-item class="grey-text darken-1"><strong>Ano de nascimento:</strong>&nbsp;<abbr [title]="resolveAcronym(attribute.birth_year)">{{attribute.birth_year}}</abbr></md-list-item>
-                <md-list-item class="grey-text darken-1"><strong>Cor dos olhos:</strong>&nbsp;<span class="{{attribute.eye_color}}-text">{{attribute.eye_color}}</span></md-list-item>
-                <md-list-item class="grey-text darken-1"><strong>Cor dos cabelos:</strong>&nbsp;{{attribute.hair_color}}</md-list-item>
+                <md-list-item><strong>Terra natal:</strong>&nbsp;<a href="javascript:void(0)" (click)="dialog(attribute.homeworld)">{{homeworld}}</a><img src="./assets/images/ic_loader.gif" *ngIf="loading"></md-list-item>
+                <md-list-item><strong>Ano de nascimento:</strong>&nbsp;<abbr [title]="resolveAcronym(attribute.birth_year)">{{attribute.birth_year}}</abbr></md-list-item>
+                <md-list-item><strong>Cor dos olhos:</strong>&nbsp;<span class="{{attribute.eye_color}}-text">{{attribute.eye_color}}</span></md-list-item>
+                <md-list-item><strong>Cor dos cabelos:</strong>&nbsp;{{attribute.hair_color}}</md-list-item>
             </md-list>
         </div>
         <div class="col s12 m12 l6">
             <md-list>
-                <md-list-item class="grey-text darken-1"><strong>Altura:</strong>&nbsp;{{attribute.height}}cm</md-list-item>
-                <md-list-item class="grey-text darken-1"><strong>Peso:</strong>&nbsp;{{attribute.mass}}kg</md-list-item>
-                <md-list-item class="grey-text darken-1"><strong>Cor da pele:</strong>&nbsp;{{attribute.skin_color}}</md-list-item>
+                <md-list-item><strong>Altura:</strong>&nbsp;{{attribute.height}}cm</md-list-item>
+                <md-list-item><strong>Peso:</strong>&nbsp;{{attribute.mass}}kg</md-list-item>
+                <md-list-item><strong>Cor da pele:</strong>&nbsp;{{attribute.skin_color}}</md-list-item>
             </md-list>
+            <div class="col s12 m12 l12">
+                <app-species [species]="attribute.species" *ngIf="attribute.species.length > 0; else noSpecies"></app-species>
+                <ng-template #noSpecies>
+                    <div class="center">
+                        Não faz parte de nenhuma espécie
+                    </div>
+                </ng-template>
+            </div>
         </div>
     </div>
 </div>

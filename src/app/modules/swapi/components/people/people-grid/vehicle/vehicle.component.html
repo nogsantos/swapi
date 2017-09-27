@@ -1,14 +1,23 @@
 <div class="card-panel">
     <div class="items-title">
-        <img src="./assets/images/ic_motorbike.svg" class="items-title-image">&nbsp;<span>Veículos</span>&nbsp;<img *ngIf="loading" src="./assets/images/ic_loader.gif">
+        <img src="./assets/images/ic_motorbike.svg" class="items-title-image">&nbsp;<span>Veículos</span>
     </div>
     <div class="row">
         <div class="col s12 m12 l12">
-            <md-list>
-                <md-list-item *ngFor="let vehicle of vehicles_data; index as i">
-                    <a href="javascript:void(0)" (click)="showDialog('vehicle', vehicle.url)">{{vehicle.name}}</a>
-                </md-list-item>
-            </md-list>
+            <table mdSort (mdSortChange)="sort($event)" [mdSortDisableClear]="true" class="responsive-table highlight">
+                <thead>
+                    <tr>
+                        <th md-sort-header="name">Nome</th>
+                        <th md-sort-header="vehicle_class">Classe</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let vehicle of sortedData" class="pointer-cursor" (click)="dialog(vehicle.url)">
+                        <td>{{vehicle.name}}</td>
+                        <td>{{vehicle.vehicle_class}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

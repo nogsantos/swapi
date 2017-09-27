@@ -1,26 +1,29 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
+import { ComponentResoucesService } from '../../../../../../services/component-resouces.service';
+import { SpeciesFormComponent } from '../../../species/species-form/species-form.component';
 
 @Component({
     selector: 'app-species',
     templateUrl: './species.component.html',
-    styleUrls: ['./species.component.scss']
+    styleUrls: ['./species.component.scss'],
+    providers: [
+        ComponentResoucesService
+    ]
 })
 export class SpeciesComponent implements OnInit {
     @Input() species: any;
     species_data: any;
-    loading: boolean;
+    sortedData: any;
     /**
      * Creates an instance of SpeciesComponent.
      * @param {HttpService} service
-     * @param {MdDialog} dialog
      * @memberof SpeciesComponent
      */
     constructor(
         private service: HttpService,
-        private dialog: MdDialog,
+        private factory: ComponentResoucesService,
     ) { }
     /**
      *
@@ -28,24 +31,22 @@ export class SpeciesComponent implements OnInit {
      * @memberof SpeciesComponent
      */
     ngOnInit() {
-        this.getData();
-        this.loading = false;
+        this.get();
     }
     /**
      *
      *
      * @memberof SpeciesComponent
      */
-    getData = (): void => {
+    get(): void {
         this.species_data = [];
         if (this.species.length > 0) {
-            this.loading = true;
             this.species.forEach(location => {
                 this.service.get(location).then(respose => {
                     if (respose) {
                         this.species_data.push(respose);
+                        this.sortedData = this.species_data.slice();
                     }
-                    this.loading = false;
                 });
             });
         }
@@ -53,19 +54,26 @@ export class SpeciesComponent implements OnInit {
     /**
      *
      *
-     * @param {string} resource
      * @param {string} param
      * @memberof AttributesComponent
      */
-    openDialog(resource: string, param: string): void {
-        // const dialogRef = this.dialog.open(PlanetsFormComponent, {
-        //     data: {
-        //         resource: '',
-        //         param: param
-        //     }
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     console.log('The dialog was closed ' + result);
-        // });
+    dialog(param: string): void {
+        this.factory.showDialog(param, SpeciesFormComponent);
+    }
+    /**
+     *
+     *
+     * @param {*} sort
+     * @memberof SpeciesComponent
+     */
+    sort(sort: any) {
+        this.sortedData = this.factory.sortData(
+            sort,
+            this.species_data.slice(),
+            [
+                'name',
+                'language'
+            ]
+        );
     }
 }

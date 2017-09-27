@@ -1,14 +1,16 @@
-<div class="card-panel grey lighten-5">
-    <div class="items-title">
-        <img src="./assets/images/ic_linux.svg" class="items-title-image">&nbsp;<span>Especie</span>&nbsp;<img *ngIf="loading" src="./assets/images/ic_loader.gif">
-    </div>
-    <div class="row">
-        <div class="col s12 m12 l12">
-            <md-list>
-                <md-list-item *ngFor="let specie of species_data; index as i">
-                    <a href="javascript:void(0)" (click)="openDialog('specie', specie.url)">{{specie.name}}</a>
-                </md-list-item>
-            </md-list>
-        </div>
-    </div>
+<div class="row">
+    <table mdSort (mdSortChange)="sort($event)" [mdSortDisableClear]="true" class="responsive-table highlight">
+        <thead>
+            <tr>
+                <th md-sort-header="name">Espécie</th>
+                <th md-sort-header="language">Lingua</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let specie of sortedData" class="pointer-cursor" (click)="dialog(specie.url)">
+                <td>{{specie.name}}</td>
+                <td>{{specie.language}}</td>
+            </tr>
+        </tbody>
+    </table>
 </div>

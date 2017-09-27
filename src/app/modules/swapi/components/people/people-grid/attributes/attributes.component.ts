@@ -1,13 +1,16 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
+import { ComponentResoucesService } from '../../../../../../services/component-resouces.service';
 import { PlanetsFormComponent } from '../../../planets/planets-form/planets-form.component';
 
 @Component({
     selector: 'app-attributes',
     templateUrl: './attributes.component.html',
-    styleUrls: ['./attributes.component.scss']
+    styleUrls: ['./attributes.component.scss'],
+    providers: [
+        ComponentResoucesService
+    ]
 })
 export class AttributesComponent implements OnInit {
     @Input() attribute: any;
@@ -21,7 +24,7 @@ export class AttributesComponent implements OnInit {
      */
     constructor(
         private service: HttpService,
-        private dialog: MdDialog,
+        private factory: ComponentResoucesService,
     ) { }
     /**
      *
@@ -51,19 +54,10 @@ export class AttributesComponent implements OnInit {
      *
      *
      * @param {string} resource
-     * @param {string} param
      * @memberof AttributesComponent
      */
-    openDialog(resource: string, param: string): void {
-        const dialogRef = this.dialog.open(PlanetsFormComponent, {
-            data: {
-                resource: '',
-                param: param
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result);
-        });
+    dialog(resource: string): void {
+        this.factory.showDialog(resource, PlanetsFormComponent);
     }
     /**
      *

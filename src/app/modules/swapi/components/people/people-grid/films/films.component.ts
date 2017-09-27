@@ -1,17 +1,22 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
+import { ComponentResoucesService } from '../../../../../../services/component-resouces.service';
+import { FilmsFormComponent } from '../../../films/films-form/films-form.component';
 
 @Component({
     selector: 'app-films',
     templateUrl: './films.component.html',
-    styleUrls: ['./films.component.scss']
+    styleUrls: ['./films.component.scss'],
+    providers: [
+        ComponentResoucesService
+    ]
 })
 export class FilmsComponent implements OnInit {
     @Input() films: Array<any>;
     films_data: Array<any>;
     loading: boolean;
+    sortedData;
     /**
      * Creates an instance of FilmsComponent.
      * @param {HttpService} service
@@ -20,7 +25,7 @@ export class FilmsComponent implements OnInit {
      */
     constructor(
         private service: HttpService,
-        private dialog: MdDialog,
+        private factory: ComponentResoucesService,
     ) { }
     /**
      *
@@ -28,24 +33,22 @@ export class FilmsComponent implements OnInit {
      * @memberof FilmsComponent
      */
     ngOnInit() {
-        this.getData();
-        this.loading = false;
+        this.get();
     }
     /**
      *
      *
      * @memberof FilmsComponent
      */
-    getData = (): void => {
+    get(): void {
         this.films_data = [];
         if (this.films.length > 0) {
-            this.loading = true;
             this.films.forEach(location => {
                 this.service.get(location).then(response => {
                     if (response) {
                         this.films_data.push(response);
+                        this.sortedData = this.films_data.slice();
                     }
-                    this.loading = false;
                 });
             });
         }
@@ -53,20 +56,11 @@ export class FilmsComponent implements OnInit {
     /**
      *
      *
-     * @param {string} resource
      * @param {string} param
      * @memberof AttributesComponent
      */
-    openDialog(resource: string, param: string): void {
-        // const dialogRef = this.dialog.open(PlanetsFormComponent, {
-        //     data: {
-        //         resource: '',
-        //         param: param
-        //     }
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     console.log('The dialog was closed ' + result);
-        // });
+    dialog(param: string): void {
+        this.factory.showDialog(param, FilmsFormComponent);
     }
     /**
      *
@@ -78,5 +72,22 @@ export class FilmsComponent implements OnInit {
     dateFormat(date: string): string {
         return `${new Date(date).getFullYear()}`;
     }
-
+    /**
+     *
+     *
+     * @param {Sort} sort
+     * @returns
+     * @memberof FilmsComponent
+     */
+    sort(sort: any) {
+        this.sortedData = this.factory.sortData(
+            sort,
+            this.films_data.slice(),
+            [
+                'release_date',
+                'title',
+                'director',
+            ]
+        );
+    }
 }

@@ -37,19 +37,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col s12 m12 l6">
+                            <div class="col s12 m12 l12">
                                 <app-films [films]="item.films" *ngIf="item.films.length > 0; else noFilms"></app-films>
                                 <ng-template #noFilms>
                                     <div class="center">
                                         Não participou de nenhum filme
-                                    </div>
-                                </ng-template>
-                            </div>
-                            <div class="col s12 m12 l6">
-                                <app-species [species]="item.species" *ngIf="item.species.length > 0; else noSpecies"></app-species>
-                                <ng-template #noSpecies>
-                                    <div class="center">
-                                        Não faz parte de nenhuma espécie
                                     </div>
                                 </ng-template>
                             </div>

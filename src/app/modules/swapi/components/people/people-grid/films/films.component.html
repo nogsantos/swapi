@@ -1,14 +1,25 @@
 <div class="card-panel grey lighten-5">
-    <div class=" items-title">
-        <img src="./assets/images/ic_filmstrip.svg" class="items-title-image">&nbsp;<span>Filmes</span>&nbsp;<img *ngIf="loading" src="./assets/images/ic_loader.gif">
+    <div class="items-title">
+        <img src="./assets/images/ic_filmstrip.svg" class="items-title-image">&nbsp;<span>Filmes</span>
     </div>
     <div class="row">
         <div class="col s12 m12 l12">
-            <md-list>
-                <md-list-item *ngFor="let film of films_data; index as i">
-                    <a href="javascript:void(0)" (click)="openDialog('film', film.url)"><em>{{dateFormat(film.release_date)}}</em>&nbsp;{{film.title}}</a>
-                </md-list-item>
-            </md-list>
+            <table mdSort (mdSortChange)="sort($event)" [mdSortDisableClear]="true" class="responsive-table highlight">
+                <thead>
+                    <tr>
+                        <th md-sort-header="release_date">Ano</th>
+                        <th md-sort-header="title">Título</th>
+                        <th md-sort-header="director">Diretor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let film of sortedData" class="pointer-cursor" (click)="dialog(film.url)">
+                        <td>{{dateFormat(film.release_date)}}</td>
+                        <td>{{film.title}}</td>
+                        <td>{{film.director}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

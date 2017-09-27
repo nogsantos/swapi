@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MdDialog } from '@angular/material';
 import { trigger, style, transition, animate, group } from '@angular/animations';
 
 import * as $ from 'jquery';
@@ -61,7 +60,6 @@ export class PeopleGridComponent implements OnInit {
      */
     constructor(
         private service: HttpService,
-        public dialog: MdDialog,
         private resource: EndpointApi,
         private broadcaster: Broadcaster,
         public colors: ColorService
@@ -249,30 +247,6 @@ export class PeopleGridComponent implements OnInit {
      */
     inArray(newvalue: number): boolean {
         return this.page_loaded.some((value, index) => newvalue === value);
-    }
-    /**
-     *
-     *
-     * @param {string} resource
-     * @param {string} param
-     * @memberof PeopleGridComponent
-     */
-    openDialog(resource: string, param: string): void {
-        let component: any;
-        if (resource === 'homeworld') {
-            component = PlanetsFormComponent;
-        } else {
-            component = PeopleFormComponent;
-        }
-        const dialogRef = this.dialog.open(component, {
-            data: {
-                resource: resource,
-                param: param
-            }
-        });
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed ' + result);
-        });
     }
     /**
      *

@@ -1,27 +1,30 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { MdDialog } from '@angular/material';
 
 import { HttpService } from '../../../../services/http/http.service';
+import { ComponentResoucesService } from '../../../../../../services/component-resouces.service';
+import { VehiclesFormComponent } from '../../../vehicles/vehicles-form/vehicles-form.component';
 
 @Component({
     selector: 'app-vehicle',
     templateUrl: './vehicle.component.html',
-    styleUrls: ['./vehicle.component.scss']
+    styleUrls: ['./vehicle.component.scss'],
+    providers: [
+        ComponentResoucesService
+    ]
 })
 export class VehicleComponent implements OnInit {
     @Input() vehicles: any;
     vehicles_data: any;
-    broad: boolean;
-    loading: boolean;
+    sortedData: any;
     /**
      * Creates an instance of VehicleComponent.
      * @param {HttpService} service
-     * @param {MdDialog} dialog
+     * @param {ComponentResoucesService} factory
      * @memberof VehicleComponent
      */
     constructor(
         private service: HttpService,
-        private dialog: MdDialog,
+        private factory: ComponentResoucesService,
     ) { }
     /**
      *
@@ -29,8 +32,7 @@ export class VehicleComponent implements OnInit {
      * @memberof VehicleComponent
      */
     ngOnInit() {
-        this.loading = false;
-        this.getData();
+        this.get();
     }
     /**
      *
@@ -38,16 +40,15 @@ export class VehicleComponent implements OnInit {
      * @param {*} address
      * @memberof VehicleComponent
      */
-    getData = (): void => {
+    get(): void {
         this.vehicles_data = [];
         if (this.vehicles.length > 0) {
-            this.loading = true;
             this.vehicles.forEach(location => {
                 this.service.get(location).then(response => {
                     if (response) {
                         this.vehicles_data.push(response);
+                        this.sortedData = this.vehicles_data.slice();
                     }
-                    this.loading = false;
                 });
             });
         }
@@ -59,16 +60,23 @@ export class VehicleComponent implements OnInit {
      * @param {string} param
      * @memberof VehicleComponent
      */
-    showDialog = (resource: string, param: string): void => {
-        // const dialogRef = this.dialog.open(PlanetsFormComponent, {
-        //     data: {
-        //         resource: '',
-        //         param: param
-        //     }
-        // });
-        // dialogRef.afterClosed().subscribe(result => {
-        //     console.log('The dialog was closed ' + result);
-        // });
+    dialog(param: string): void {
+        this.factory.showDialog(param, VehiclesFormComponent);
     }
-
+    /**
+     *
+     *
+     * @param {*} sort
+     * @memberof VehicleComponent
+     */
+    sort(sort: any) {
+        this.sortedData = this.factory.sortData(
+            sort,
+            this.vehicles_data.slice(),
+            [
+                'name',
+                'vehicle_class'
+            ]
+        );
+    }
 }

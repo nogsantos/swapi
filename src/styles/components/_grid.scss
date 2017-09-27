@@ -55,7 +55,6 @@
 .row {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 20px; // Clear floating children
     &:after {
         content: "";
         display: table;
@@ -137,5 +136,11 @@
                 $i: $i + 1;
             }
         }
+    }
+}
+
+@media #{$medium-and-down} {
+    .row {
+        margin-bottom: 20px !important;
     }
 }
