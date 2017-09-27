@@ -1,19 +1,12 @@
+<app-form-loader [loading]="loading"></app-form-loader>
 <h2 md-dialog-title *ngIf="query_data.title" class="items-title">
     {{query_data.title}}
 </h2>
-{{loading}}
 <md-dialog-content>
-    <div class="form-spiner" *ngIf="loading; else formData">
-        <div class="spinner">
-            <div class="double-bounce1"></div>
-            <div class="double-bounce2"></div>
-        </div>
-    </div>
-    <ng-template #formData>
-        <md-card>
-            <md-card-content>
-                <div class="row">
-                    <!-- <md-list class="col s12 m12 l6">
+    <md-card *ngIf="!loading">
+        <md-card-content>
+            <div class="row">
+                <!-- <md-list class="col s12 m12 l6">
                             <md-list-item><strong>Diâmetro:</strong>&nbsp;{{query_data.diameter}}</md-list-item>
                             <md-list-item><strong>Período de rotação:</strong>&nbsp;{{query_data.rotation_period}}h</md-list-item>
                             <md-list-item><strong>Período orbital:</strong>&nbsp;{{query_data.orbital_period}}h</md-list-item>
@@ -25,10 +18,9 @@
                             <md-list-item><strong>Terreno:</strong>&nbsp;{{query_data.terrain}}</md-list-item>
                             <md-list-item><strong>Água:</strong>&nbsp;{{query_data.surface_water}}%</md-list-item>
                         </md-list> -->
-                </div>
-            </md-card-content>
-        </md-card>
-    </ng-template>
+            </div>
+        </md-card-content>
+    </md-card>
 </md-dialog-content>
 <md-dialog-actions class="right">
     <button md-button [md-dialog-close]="true">Sair</button>

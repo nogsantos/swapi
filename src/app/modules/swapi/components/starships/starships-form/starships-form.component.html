@@ -1,34 +1,27 @@
+<app-form-loader [loading]="loading"></app-form-loader>
 <h2 md-dialog-title *ngIf="query_data.name" class="items-title">
-        {{query_data.name}}
-    </h2>
-    <md-dialog-content>
-        <div class="form-spiner" *ngIf="loading; else formData">
-            <div class="spinner">
-                <div class="double-bounce1"></div>
-                <div class="double-bounce2"></div>
-            </div>
-        </div>
-        <ng-template #formData>
-            <md-card>
-                <md-card-content>
-                    <div class="row">
-                        <md-list class="col s12 m12 l6">
-                            <md-list-item><strong>Fabricante:</strong>&nbsp;{{query_data.manufacturer}}</md-list-item>
-                            <md-list-item><strong>Modelo:</strong>&nbsp;{{query_data.model}}</md-list-item>
-                            <md-list-item><strong>Velocidade:</strong>&nbsp;{{query_data.max_atmosphering_speed}}</md-list-item>
-                            <md-list-item><strong>Capacidade de carga:</strong>&nbsp;{{query_data.cargo_capacity}}kg</md-list-item>
-                        </md-list>
-                        <md-list class="col s12 m12 l6">
-                            <md-list-item><strong>hyperdrive_rating:</strong>&nbsp;{{query_data.hyperdrive_rating}}</md-list-item>
-                            <!-- <md-list-item><strong>Clima:</strong>&nbsp;{{query_data.climate}}</md-list-item>
+    {{query_data.name}}
+</h2>
+<md-dialog-content>
+    <md-card *ngIf="!loading">
+        <md-card-content>
+            <div class="row">
+                <md-list class="col s12 m12 l6">
+                    <md-list-item><strong>Fabricante:</strong>&nbsp;{{query_data.manufacturer}}</md-list-item>
+                    <md-list-item><strong>Modelo:</strong>&nbsp;{{query_data.model}}</md-list-item>
+                    <md-list-item><strong>Velocidade:</strong>&nbsp;{{query_data.max_atmosphering_speed}}</md-list-item>
+                    <md-list-item><strong>Capacidade de carga:</strong>&nbsp;{{query_data.cargo_capacity}}kg</md-list-item>
+                </md-list>
+                <md-list class="col s12 m12 l6">
+                    <md-list-item><strong>hyperdrive_rating:</strong>&nbsp;{{query_data.hyperdrive_rating}}</md-list-item>
+                    <!-- <md-list-item><strong>Clima:</strong>&nbsp;{{query_data.climate}}</md-list-item>
                             <md-list-item><strong>Terreno:</strong>&nbsp;{{query_data.terrain}}</md-list-item>
                             <md-list-item><strong>Água:</strong>&nbsp;{{query_data.surface_water}}%</md-list-item> -->
-                        </md-list>
-                    </div>
-                </md-card-content>
-            </md-card>
-        </ng-template>
-    </md-dialog-content>
-    <md-dialog-actions class="right">
-        <button md-button [md-dialog-close]="true">Sair</button>
-    </md-dialog-actions>
+                </md-list>
+            </div>
+        </md-card-content>
+    </md-card>
+</md-dialog-content>
+<md-dialog-actions class="right">
+    <button md-button [md-dialog-close]="true">Sair</button>
+</md-dialog-actions>

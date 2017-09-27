@@ -32,6 +32,7 @@ import { SpeciesFormComponent } from './components/species/species-form/species-
 import { StarshipsFormComponent } from './components/starships/starships-form/starships-form.component';
 import { VehiclesFormComponent } from './components/vehicles/vehicles-form/vehicles-form.component';
 import { FilmsFormComponent } from './components/films/films-form/films-form.component';
+import { FormLoaderComponent } from './components/form-loader/form-loader.component';
 
 @NgModule({
     imports: [
@@ -60,7 +61,8 @@ import { FilmsFormComponent } from './components/films/films-form/films-form.com
         SpeciesFormComponent,
         StarshipsFormComponent,
         VehiclesFormComponent,
-        FilmsFormComponent
+        FilmsFormComponent,
+        FormLoaderComponent
     ],
     entryComponents: [
         PeopleFormComponent,
