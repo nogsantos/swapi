@@ -5,8 +5,8 @@ import { HttpService } from '../services/http/http.service';
 
 @Injectable()
 export class FormComponentService<T> {
-    query_data: Array<any>;
-    protected loading: boolean;
+    query_data: any;
+    loading: boolean;
     /**
      * Creates an instance of FormComponentService.
      * @param {HttpService} service
@@ -16,8 +16,8 @@ export class FormComponentService<T> {
      */
     constructor(
         private service: HttpService,
-        protected dialogRef: MdDialogRef<T>,
-        @Inject(MD_DIALOG_DATA) protected data: any
+        private dialogRef: MdDialogRef<T>,
+        @Inject(MD_DIALOG_DATA) public data: any
     ) {
         this.query_data = [];
         if (this.data && this.data.param) {

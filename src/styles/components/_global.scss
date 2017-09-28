@@ -767,7 +767,6 @@ th {
     padding: 0.5rem;
     font-weight: bold;
     color: color('blue-grey', 'lighten-4');
-    ;
     &>span {
         float: right;
         padding: 0.4rem;
@@ -844,4 +843,11 @@ th {
             -webkit-transform: scale(1.0);
         }
     }
+}
+
+.form-item-legend{
+    background-color: color('grey', 'lighten-3');
+    padding: 0.5rem;
+    font-weight: bold;
+    color: color('blue-grey', 'darken-4');
 }

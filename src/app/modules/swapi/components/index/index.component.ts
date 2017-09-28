@@ -12,7 +12,7 @@ export class IndexComponent implements OnInit {
      * Creates an instance of IndexComponent.
      * @memberof IndexComponent
      */
-    constructor(private router: Router) { }
+    constructor(public router: Router) { }
     /**
      * Init
      *

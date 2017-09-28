@@ -23,6 +23,8 @@ export class ComponentResoucesService implements ComponentResources {
      */
     showDialog(param: string, component: any): void {
         const dialogRef = this.dialog.open(component, {
+            disableClose: false,
+            width: '50%',
             data: {
                 param: param
             }

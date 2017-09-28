@@ -1,23 +1,47 @@
 <app-form-loader [loading]="loading"></app-form-loader>
-<h2 md-dialog-title *ngIf="query_data.name" class="items-title">
-    {{query_data.name}}
+<h2 md-dialog-title class="items-title" *ngIf="!loading">
+    {{query_data.name}} <img src="./assets/images/ic_earth.svg" class="right">
 </h2>
 <md-dialog-content>
     <md-card *ngIf="!loading">
         <md-card-content>
             <div class="row">
-                <md-list class="col s12 m12 l6">
-                    <md-list-item><strong>Diâmetro:</strong>&nbsp;{{query_data.diameter}}</md-list-item>
-                    <md-list-item><strong>Período de rotação:</strong>&nbsp;{{query_data.rotation_period}}h</md-list-item>
-                    <md-list-item><strong>Período orbital:</strong>&nbsp;{{query_data.orbital_period}}h</md-list-item>
-                    <md-list-item><strong>Gravidade:</strong>&nbsp;{{query_data.gravity}}</md-list-item>
-                </md-list>
-                <md-list class="col s12 m12 l6">
-                    <md-list-item><strong>População:</strong>&nbsp;{{query_data.population}}</md-list-item>
-                    <md-list-item><strong>Clima:</strong>&nbsp;{{query_data.climate}}</md-list-item>
-                    <md-list-item><strong>Terreno:</strong>&nbsp;{{query_data.terrain}}</md-list-item>
-                    <md-list-item><strong>Água:</strong>&nbsp;{{query_data.surface_water}}%</md-list-item>
-                </md-list>
+                <div class="col s12 m12 l6">
+                    <div class="col s12 m12 l12">
+                        <div class="form-item-legend">Diâmetro</div>
+                        <div class="right">{{query_data.diameter}}</div>
+                    </div>
+                    <div class="col s12 m12 l12">
+                        <div class="form-item-legend">Período de rotação</div>
+                        <div class="right">{{query_data.rotation_period}}h</div>
+                    </div>
+                    <div class="col s12 m12 l12">
+                        <div class="form-item-legend">Período orbital</div>
+                        <div class="right">{{query_data.orbital_period}}h</div>
+                    </div>
+                    <div class="col s12 m12 l12">
+                        <div class="form-item-legend">Gravidade</div>
+                        <div class="right">{{query_data.gravity}}</div>
+                    </div>
+                </div>
+                <div class="col s12 m12 l6">
+                    <div class="col s12 m12 l12">
+                        <div class="form-item-legend">População</div>
+                        <div class="right">{{query_data.population}}</div>
+                    </div>
+                    <div class="col s12 m12 l12">
+                        <div class="form-item-legend">Clima</div>
+                        <div class="right">{{query_data.climate}}</div>
+                    </div>
+                    <div class="col s12 m12 l12">
+                        <div class="form-item-legend">Terreno</div>
+                        <div class="right">{{query_data.terrain}}</div>
+                    </div>
+                    <div class="col s12 m12 l12">
+                        <div class="form-item-legend">Superfície de água</div>
+                        <div class="right">{{query_data.surface_water}}%</div>
+                    </div>
+                </div>
             </div>
         </md-card-content>
     </md-card>
